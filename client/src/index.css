@@ -30,6 +30,8 @@
   --gold-100: hsl(48 96% 89%);
   --radius: 0.75rem;
   --font-arabic: 'Cairo', sans-serif;
+  --shadow-gold: hsl(45 86% 53% / 0.2);
+  --shadow-pink: hsl(332 45% 87% / 0.2);
 }
 
 .dark {

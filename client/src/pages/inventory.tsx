@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Plus, User } from "lucide-react";
+import { Plus, User, BarChart3, Package, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DressForm from "@/components/dress-form";
 import SearchFilter from "@/components/search-filter";
+import StatsDashboard from "@/components/ui/stats-dashboard";
+import logoPath from "@assets/LR_1754863757279.jpg";
 import type { Dress } from "@shared/schema";
 
 export default function InventoryPage() {
@@ -48,10 +50,10 @@ export default function InventoryPage() {
     .filter(dress => {
       if (!filterBy) return true;
       const lowerFilter = filterBy.toLowerCase();
-      return dress.colorsAndSizes.some(color => 
+      return dress.colorsAndSizes?.some(color => 
         color.name.toLowerCase().includes(lowerFilter) ||
         color.sizes.some(size => size.value.toLowerCase().includes(lowerFilter))
-      );
+      ) || false;
     })
     .sort((a, b) => {
       if (sortBy === "رقم الموديل") {
@@ -67,21 +69,33 @@ export default function InventoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-pink-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b-2 border-gold">
+      <header className="bg-white shadow-lg border-b-2 border-gold backdrop-blur-sm bg-white/95">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-800">لاروزا - إدارة مخزون الفساتين</h1>
+            <div className="flex items-center gap-4">
+              <img 
+                src={logoPath} 
+                alt="شعار لاروزا" 
+                className="w-12 h-12 object-contain rounded-lg bg-black/5 p-1"
+              />
+              <div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-gold to-amber-600 bg-clip-text text-transparent">
+                  لاروزا
+                </h1>
+                <p className="text-sm text-gray-600">إدارة مخزون الفساتين</p>
+              </div>
+            </div>
             <div className="flex items-center gap-4">
               <Button
                 onClick={handleNewDress}
-                className="bg-gold hover:bg-gold/90 text-white"
+                className="bg-gradient-to-r from-gold to-amber-500 hover:from-gold/90 hover:to-amber-500/90 text-white shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <Plus className="w-4 h-4 ml-2" />
                 إضافة فستان جديد
               </Button>
-              <div className="w-8 h-8 bg-light-pink rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-light-pink to-pink-400 rounded-full flex items-center justify-center shadow-md">
                 <User className="w-5 h-5 text-white" />
               </div>
             </div>
@@ -90,6 +104,9 @@ export default function InventoryPage() {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 py-6">
+        {/* Statistics Dashboard */}
+        <StatsDashboard dresses={dresses} />
+
         <SearchFilter
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
@@ -120,39 +137,58 @@ export default function InventoryPage() {
             filteredAndSortedDresses.map((dress) => (
               <div
                 key={dress.id}
-                className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+                className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg hover:border-gold/50 transition-all duration-300 cursor-pointer group"
                 onClick={() => handleEditDress(dress)}
               >
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div>
-                    <h3 className="font-semibold text-gray-800">{dress.modelNumber}</h3>
-                    <p className="text-gray-600">{dress.companyName}</p>
+                  <div className="flex items-center gap-3">
+                    {dress.imageUrl && (
+                      <img
+                        src={dress.imageUrl}
+                        alt={`فستان ${dress.modelNumber}`}
+                        className="w-12 h-16 object-cover rounded-lg border-2 border-gray-200 group-hover:border-gold/50 transition-colors"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none';
+                        }}
+                      />
+                    )}
+                    <div>
+                      <h3 className="font-semibold text-gray-800 group-hover:text-gold transition-colors">
+                        {dress.modelNumber}
+                      </h3>
+                      <p className="text-gray-600 text-sm">{dress.companyName}</p>
+                    </div>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">نوع القطعة</p>
-                    <p className="text-gray-800">{dress.pieceType}</p>
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">نوع القطعة</p>
+                    <p className="text-gray-800 font-medium">{dress.pieceType}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">الألوان المتوفرة</p>
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">الألوان المتوفرة</p>
                     <div className="flex flex-wrap gap-1 mt-1">
-                      {dress.colorsAndSizes.slice(0, 3).map((color) => (
+                      {dress.colorsAndSizes?.slice(0, 3).map((color) => (
                         <span
                           key={color.id}
-                          className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs"
+                          className="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs border border-gray-200"
                         >
                           {color.name}
                         </span>
                       ))}
-                      {dress.colorsAndSizes.length > 3 && (
-                        <span className="text-gray-500 text-xs">+{dress.colorsAndSizes.length - 3}</span>
+                      {(dress.colorsAndSizes?.length || 0) > 3 && (
+                        <span className="text-gray-500 text-xs bg-gray-50 px-2 py-1 rounded-full border">
+                          +{(dress.colorsAndSizes?.length || 0) - 3}
+                        </span>
                       )}
                     </div>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-500">إجمالي المقاسات</p>
-                    <p className="text-gold font-semibold">
-                      {dress.colorsAndSizes.reduce((total, color) => total + color.sizes.length, 0)}
-                    </p>
+                  <div className="text-left">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">إجمالي المقاسات</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-2xl font-bold bg-gradient-to-r from-gold to-amber-600 bg-clip-text text-transparent">
+                        {dress.colorsAndSizes?.reduce((total, color) => total + color.sizes.length, 0) || 0}
+                      </p>
+                      <Package className="w-4 h-4 text-gold" />
+                    </div>
                   </div>
                 </div>
               </div>

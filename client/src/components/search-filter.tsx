@@ -19,7 +19,7 @@ export default function SearchFilter({
   onFilterChange,
 }: SearchFilterProps) {
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6 mb-6 border border-gray-200">
+    <div className="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-200 backdrop-blur-sm bg-white/95">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <Label className="text-sm font-medium text-gray-700 mb-2">البحث</Label>
