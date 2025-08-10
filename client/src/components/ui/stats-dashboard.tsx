@@ -1,4 +1,4 @@
-import { BarChart3, Package, Palette, Ruler } from "lucide-react";
+import { Package, Palette, Ruler, Globe, Store } from "lucide-react";
 import type { Dress } from "@shared/schema";
 
 interface StatsDashboardProps {
@@ -11,7 +11,8 @@ export default function StatsDashboard({ dresses }: StatsDashboardProps) {
   const totalSizes = dresses.reduce((acc, dress) => 
     acc + (dress.colorsAndSizes?.reduce((colorAcc, color) => colorAcc + color.sizes.length, 0) || 0), 0
   );
-  const uniqueCompanies = new Set(dresses.map(dress => dress.companyName)).size;
+  const dressesWithOnlinePrice = dresses.filter(dress => dress.onlinePrice && dress.onlinePrice.trim() !== "").length;
+  const dressesWithStorePrice = dresses.filter(dress => dress.storePrice && dress.storePrice.trim() !== "").length;
 
   const stats = [
     {
@@ -36,16 +37,23 @@ export default function StatsDashboard({ dresses }: StatsDashboardProps) {
       bgColor: "bg-green-50",
     },
     {
-      title: "عدد الشركات",
-      value: uniqueCompanies,
-      icon: BarChart3,
-      color: "bg-orange-500",
-      bgColor: "bg-orange-50",
+      title: "مسعر إلكتروني",
+      value: dressesWithOnlinePrice,
+      icon: Globe,
+      color: "bg-blue-600",
+      bgColor: "bg-blue-50",
+    },
+    {
+      title: "مسعر متجر",
+      value: dressesWithStorePrice,
+      icon: Store,
+      color: "bg-green-600",
+      bgColor: "bg-green-50",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
       {stats.map((stat, index) => (
         <div key={index} className={`${stat.bgColor} rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-all duration-300 hover:scale-105`}>
           <div className="flex items-center justify-between">

@@ -41,6 +41,8 @@ export default function DressForm({ dress, onClose }: DressFormProps) {
       companyName: dress.companyName,
       pieceType: dress.pieceType,
       imageUrl: dress.imageUrl || "",
+      onlinePrice: dress.onlinePrice || "",
+      storePrice: dress.storePrice || "",
       colorsAndSizes: dress.colorsAndSizes || []
     } : {
       modelNumber: "",
@@ -48,6 +50,8 @@ export default function DressForm({ dress, onClose }: DressFormProps) {
       companyName: "",
       pieceType: "",
       imageUrl: "",
+      onlinePrice: "",
+      storePrice: "",
       colorsAndSizes: []
     }
   });
@@ -226,6 +230,35 @@ export default function DressForm({ dress, onClose }: DressFormProps) {
                 />
                 {form.formState.errors.imageUrl && (
                   <p className="text-red-500 text-sm mt-1">{form.formState.errors.imageUrl.message}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Pricing Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div>
+                <Label className="text-sm font-medium text-gray-700 mb-2">سعر الموقع الإلكتروني (ريال)</Label>
+                <Input
+                  {...form.register("onlinePrice")}
+                  placeholder="مثال: 150"
+                  className="rtl-input focus:ring-gold focus:border-gold"
+                  type="text"
+                />
+                {form.formState.errors.onlinePrice && (
+                  <p className="text-red-500 text-sm mt-1">{form.formState.errors.onlinePrice.message}</p>
+                )}
+              </div>
+              
+              <div>
+                <Label className="text-sm font-medium text-gray-700 mb-2">سعر المتجر (ريال)</Label>
+                <Input
+                  {...form.register("storePrice")}
+                  placeholder="مثال: 120"
+                  className="rtl-input focus:ring-gold focus:border-gold"
+                  type="text"
+                />
+                {form.formState.errors.storePrice && (
+                  <p className="text-red-500 text-sm mt-1">{form.formState.errors.storePrice.message}</p>
                 )}
               </div>
             </div>

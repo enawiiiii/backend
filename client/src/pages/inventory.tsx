@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Plus, User, BarChart3, Package, TrendingUp } from "lucide-react";
+import { Plus, User, BarChart3, Package, TrendingUp, Globe, Store } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import DressForm from "@/components/dress-form";
 import SearchFilter from "@/components/search-filter";
@@ -140,7 +140,7 @@ export default function InventoryPage() {
                 className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg hover:border-gold/50 transition-all duration-300 cursor-pointer group"
                 onClick={() => handleEditDress(dress)}
               >
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                   <div className="flex items-center gap-3">
                     {dress.imageUrl && (
                       <img
@@ -157,16 +157,35 @@ export default function InventoryPage() {
                         {dress.modelNumber}
                       </h3>
                       <p className="text-gray-600 text-sm">{dress.companyName}</p>
+                      <p className="text-gray-500 text-xs">{dress.pieceType}</p>
                     </div>
                   </div>
+                  
                   <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-wide">نوع القطعة</p>
-                    <p className="text-gray-800 font-medium">{dress.pieceType}</p>
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">الأسعار</p>
+                    <div className="space-y-1">
+                      {dress.onlinePrice && (
+                        <div className="flex items-center gap-1">
+                          <Globe className="w-3 h-3 text-blue-500" />
+                          <span className="text-sm font-medium text-blue-700">{dress.onlinePrice} ر.س</span>
+                        </div>
+                      )}
+                      {dress.storePrice && (
+                        <div className="flex items-center gap-1">
+                          <Store className="w-3 h-3 text-green-500" />
+                          <span className="text-sm font-medium text-green-700">{dress.storePrice} ر.س</span>
+                        </div>
+                      )}
+                      {!dress.onlinePrice && !dress.storePrice && (
+                        <span className="text-xs text-gray-400">غير محدد</span>
+                      )}
+                    </div>
                   </div>
+
                   <div>
                     <p className="text-xs text-gray-500 uppercase tracking-wide">الألوان المتوفرة</p>
                     <div className="flex flex-wrap gap-1 mt-1">
-                      {dress.colorsAndSizes?.slice(0, 3).map((color) => (
+                      {dress.colorsAndSizes?.slice(0, 2).map((color) => (
                         <span
                           key={color.id}
                           className="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs border border-gray-200"
@@ -174,17 +193,25 @@ export default function InventoryPage() {
                           {color.name}
                         </span>
                       ))}
-                      {(dress.colorsAndSizes?.length || 0) > 3 && (
+                      {(dress.colorsAndSizes?.length || 0) > 2 && (
                         <span className="text-gray-500 text-xs bg-gray-50 px-2 py-1 rounded-full border">
-                          +{(dress.colorsAndSizes?.length || 0) - 3}
+                          +{(dress.colorsAndSizes?.length || 0) - 2}
                         </span>
                       )}
                     </div>
                   </div>
-                  <div className="text-left">
-                    <p className="text-xs text-gray-500 uppercase tracking-wide">إجمالي المقاسات</p>
-                    <div className="flex items-center gap-2">
-                      <p className="text-2xl font-bold bg-gradient-to-r from-gold to-amber-600 bg-clip-text text-transparent">
+
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">الألوان</p>
+                    <p className="text-lg font-bold text-purple-600">
+                      {dress.colorsAndSizes?.length || 0}
+                    </p>
+                  </div>
+                  
+                  <div className="text-center">
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">المقاسات</p>
+                    <div className="flex items-center justify-center gap-2">
+                      <p className="text-lg font-bold bg-gradient-to-r from-gold to-amber-600 bg-clip-text text-transparent">
                         {dress.colorsAndSizes?.reduce((total, color) => total + color.sizes.length, 0) || 0}
                       </p>
                       <Package className="w-4 h-4 text-gold" />

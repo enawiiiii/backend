@@ -16,6 +16,8 @@ export const dresses = pgTable("dresses", {
   companyName: text("company_name").notNull(),
   pieceType: text("piece_type").notNull(),
   imageUrl: text("image_url"),
+  onlinePrice: text("online_price"),
+  storePrice: text("store_price"),
   colorsAndSizes: jsonb("colors_and_sizes").$type<ColorAndSize[]>().default([]),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -42,6 +44,8 @@ export const insertDressSchema = createInsertSchema(dresses).omit({
   companyName: z.string().min(1, "اسم الشركة مطلوب"),
   pieceType: z.string().min(1, "نوع القطعة مطلوب"),
   imageUrl: z.string().url("رابط الصورة غير صحيح").optional().or(z.literal("")),
+  onlinePrice: z.string().optional(),
+  storePrice: z.string().optional(),
   colorsAndSizes: z.array(colorAndSizeSchema).min(1, "يجب إضافة لون واحد على الأقل")
 });
 
