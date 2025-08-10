@@ -1,0 +1,49 @@
+You are an expert full-stack developer.  
+Build a complete **Inventory Management Web Application** for a fashion store called **Laroza**, focusing only on the **Dress Information & Stock Management Page**.
+
+### Language & Layout:
+- All UI labels, placeholders, and buttons must be in Arabic.
+- Use **Right-to-Left (RTL)** layout for proper Arabic display.
+
+### Requirements:
+- All inputs must be **text-based** (no dropdowns or radio buttons).
+- The app must allow adding, editing, and deleting dress data.
+
+### Dress Fields (all text inputs, Arabic labels):
+1. رقم الموديل
+2. مواصفات الموديل (multi-line text area)
+3. اسم الشركة
+4. نوع القطعة (مثال: فستان، فستان سهرة...)
+
+### Color and Size Management (Arabic):
+- الموظف يمكنه كتابة اسم اللون يدويًا (نص).
+- لكل لون، يمكن كتابة عدة مقاسات يدويًا (مثال: "40", "46", "52").
+- زر **"إضافة لون"** لإنشاء قسم لون جديد.
+- زر **"إضافة مقاس"** تحت كل لون لإضافة حقل مقاس جديد.
+- كل مقاس مرتبط بلون معين ويمكن حذفه أو تعديله بشكل مستقل.
+
+### Stock Deletion:
+- السماح بحذف مقاس معين من لون معين لفستان معين.
+- تأكيد الحذف قبل تنفيذه.
+
+### UI/UX:
+- تصميم بسيط وأنيق باستخدام **الأبيض، الذهبي، والوردي الفاتح**.
+- متجاوب مع الشاشات (كمبيوتر + موبايل).
+- فصل واضح بين قسم تفاصيل الفستان (أعلى) وقسم الألوان والمقاسات (أسفل).
+- أقسام الألوان تكون قابلة للطي/الفتح للحفاظ على ترتيب الصفحة.
+
+### Optional Features:
+- مربع بحث (نص) للبحث عن فستان برقم الموديل أو اسم الشركة.
+- ترتيب حسب رقم الموديل أو تاريخ الإضافة.
+- فلترة حسب اللون أو المقاس (يدويًا).
+- مؤشر عدد المخزون لكل لون.
+- خيار لإضافة **رابط صورة الفستان** (نص) مع عرض معاينة قبل الحفظ.
+
+### Technical Stack:
+- **Frontend:** React مع دعم RTL + Tailwind CSS.
+- **Backend:** Node.js + Express، قاعدة بيانات MongoDB.
+- API لإضافة/تعديل/حذف/عرض بيانات الفساتين.
+- التحقق من صحة الإدخالات.
+- رسائل نجاح/خطأ وتحميل.
+
+Goal: Deliver a **ready-to-run** Arabic web app in Replit where staff can fully manage dress inventory for Laroza using only Arabic text input fields.
