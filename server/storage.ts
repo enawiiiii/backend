@@ -66,7 +66,8 @@ export class MemStorage implements IStorage {
       id, 
       createdAt: now, 
       updatedAt: now,
-      colorsAndSizes: insertDress.colorsAndSizes || []
+      colorsAndSizes: insertDress.colorsAndSizes || [],
+      imageUrl: insertDress.imageUrl || null
     };
     this.dresses.set(id, dress);
     return dress;

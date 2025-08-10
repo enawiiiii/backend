@@ -14,8 +14,19 @@ export default function InventoryPage() {
   const [filterBy, setFilterBy] = useState("");
 
   const { data: dresses = [], isLoading, refetch } = useQuery({
-    queryKey: searchQuery ? ["/api/dresses/search", { q: searchQuery }] : ["/api/dresses"],
-  });
+    queryKey: searchQuery ? ["/api/dresses/search", searchQuery] : ["/api/dresses"],
+    queryFn: async () => {
+      if (searchQuery) {
+        const response = await fetch(`/api/dresses/search?q=${encodeURIComponent(searchQuery)}`);
+        if (!response.ok) throw new Error('Search failed');
+        return response.json();
+      } else {
+        const response = await fetch('/api/dresses');
+        if (!response.ok) throw new Error('Failed to fetch dresses');
+        return response.json();
+      }
+    }
+  }) as { data: Dress[], isLoading: boolean, refetch: () => void };
 
   const handleNewDress = () => {
     setEditingDress(null);
