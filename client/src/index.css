@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(210 25% 7.8431%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(210 25% 7.8431%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(210 25% 7.8431%);
+  --primary: hsl(45 86% 53%);
+  --primary-foreground: hsl(0 0% 100%);
+  --secondary: hsl(332 45% 87%);
+  --secondary-foreground: hsl(210 25% 7.8431%);
+  --muted: hsl(210 40% 98%);
+  --muted-foreground: hsl(215 16% 47%);
+  --accent: hsl(210 40% 98%);
+  --accent-foreground: hsl(222 84% 5%);
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(214 32% 91%);
+  --input: hsl(214 32% 91%);
+  --ring: hsl(45 86% 53%);
+  --gold: hsl(45 86% 53%);
+  --light-pink: hsl(332 45% 87%);
+  --pink-50: hsl(327 73% 97%);
+  --gold-50: hsl(48 100% 96%);
+  --gold-100: hsl(48 96% 89%);
+  --radius: 0.75rem;
+  --font-arabic: 'Cairo', sans-serif;
+}
+
+.dark {
+  --background: hsl(222 84% 5%);
+  --foreground: hsl(210 40% 98%);
+  --card: hsl(222 84% 5%);
+  --card-foreground: hsl(210 40% 98%);
+  --popover: hsl(222 84% 5%);
+  --popover-foreground: hsl(210 40% 98%);
+  --primary: hsl(45 86% 53%);
+  --primary-foreground: hsl(222 84% 5%);
+  --secondary: hsl(217 33% 17%);
+  --secondary-foreground: hsl(210 40% 98%);
+  --muted: hsl(217 33% 17%);
+  --muted-foreground: hsl(215 20% 65%);
+  --accent: hsl(217 33% 17%);
+  --accent-foreground: hsl(210 40% 98%);
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(217 33% 17%);
+  --input: hsl(217 33% 17%);
+  --ring: hsl(45 86% 53%);
+  --gold: hsl(45 86% 53%);
+  --light-pink: hsl(332 45% 87%);
+  --pink-50: hsl(327 73% 97%);
+  --gold-50: hsl(48 100% 96%);
+  --gold-100: hsl(48 96% 89%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-arabic;
+    direction: rtl;
+  }
+}
+
+.rtl-input {
+  text-align: right;
+  direction: rtl;
+}
+
+.collapsible-content {
+  transition: max-height 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.collapsed {
+  max-height: 0;
+}
+
+.expanded {
+  max-height: 1000px;
+}
